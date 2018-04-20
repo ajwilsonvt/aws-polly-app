@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Polly App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <span id="postIDreturned"></span>
+    <div class="container-fluid">
+      <h1>Polly App</h1>
+      <div class="card space-bottom">
+        <div class="card-body">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Text</span>
+            </div>
+            <textarea id="postText" class="form-control" aria-label="Text"></textarea>
+          </div>
+          <div class="text-center text-sm-right">
+            <span id="charCounter">Characters: 0</span>
+          </div>
+          <br>
+          <div class="text-center">
+            <button id="sayButton" class="btn btn-primary">Convert to Speech</button>
+          </div>
+        </div>
+      </div>
+      <div id="notes"></div>
+    </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+    <script src="scripts.js"></script>
+  </body>
+</html>

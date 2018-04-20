@@ -1,0 +1,27 @@
+.error {
+	color: #c91a1a;
+	position: absolute;
+  top: .5em;
+  right: 1em;
+  z-index: 1;
+}
+
+.space-bottom {
+	margin-bottom: 1em;
+}
+
+.success {
+  color: #3aa830;
+  position: absolute;
+  top: .5em;
+  right: 1em;
+  z-index: 1;
+}
+
+.timestamp {
+	display: block;
+}
+
+.voicenote audio {
+	margin: .5em 0 .5em -1.5em;
+}
