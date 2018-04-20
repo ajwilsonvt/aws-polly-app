@@ -1,4 +1,4 @@
-var API_ENDPOINT = '';
+var API_ENDPOINT = 'https://arnesqy3u5.execute-api.us-east-1.amazonaws.com/dev';
 
 $(function() {
 
@@ -8,7 +8,7 @@ $(function() {
     document.getElementById('postIDreturned').textContent = '';
     var formattedText = $('#postText')
       .val()
-      .replace(/(?<=[^-\s])\n/g, '. ')
+      // .replace(/(?<=[^-\s])\n/g, '. ')
       .replace(/\n/g, ' ')
       .replace(/\.{2,}/g, '. ')
       .replace(/\-{2,}/g, '')
