@@ -21,17 +21,13 @@ $(function() {
       data:  JSON.stringify(inputData),
       contentType: 'application/json; charset=utf-8',
       success: function(response) {
-        var el = document.getElementById('postIDreturned');
-        el.className = 'success';
-        el.textContent = 'Success';
+        flash('Success');
         $('#postText').val('');
         document.getElementById('charCounter').textContent = 'Characters: 0';
         init();
       },
       error: function() {
-        var el = document.getElementById('postIDreturned');
-        el.className = 'error';
-        el.textContent = 'Error';
+        flash('Error');
       },
     });
   }
@@ -120,9 +116,7 @@ $(function() {
             })
           });
 
-          var el = document.getElementById('postIDreturned');
-          el.className = 'success';
-          el.textContent = 'Success';
+          flash('Success');
 
           $('.btn-danger').click(function() {
             document.getElementById('postIDreturned').textContent = '';
@@ -133,9 +127,7 @@ $(function() {
               data:  JSON.stringify({ 'id': $(this).val() }),
               contentType: 'application/json; charset=utf-8',
               success: function(response) {
-                var el = document.getElementById('postIDreturned');
-                el.className = 'success';
-                el.textContent = 'Success';
+                flash('Success');
 
                 // remove the card containing this button
                 $deleteButton.parents('.card:eq(0)').remove();
@@ -146,9 +138,7 @@ $(function() {
                 }
               },
               error: function() {
-                var el = document.getElementById('postIDreturned');
-                el.className = 'error';
-                el.textContent = 'Error';
+                flash('Error');
               },
             });
           });
@@ -157,9 +147,7 @@ $(function() {
         }
       },
       error: function() {
-        var el = document.getElementById('postIDreturned');
-        el.className = 'error';
-        el.textContent = 'Error';
+        flash('Error');
       },
     });
   }
@@ -191,6 +179,16 @@ $(function() {
       .replace(/[\<\>\"\'\“\”]/g, '')
       .replace(/\&/g, 'and');
     return finalStr;
+  }
+
+  function flash(message) {
+  	var el = document.getElementById('postIDreturned');
+    el.className = message.toLowerCase();
+    el.textContent = message;
+
+  	setTimeout(function() {
+  		el.textContent = '';
+  	}, 2000);
   }
 
 });
