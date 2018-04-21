@@ -106,7 +106,7 @@ $(function() {
 
             $(`#note-${i}`).click(function() {
             	var $text = $(this).find('strong');
-            	if ($text.text().length < lastResponse[i].text.length) {
+            	if ($text.text().length - 3 < lastResponse[i].text.length) {
             		// display full text
             		$text.text(lastResponse[i].text);
             	} else {
