@@ -1,4 +1,5 @@
 var API_ENDPOINT = 'https://arnesqy3u5.execute-api.us-east-1.amazonaws.com/dev';
+var DISPLAY_TEXT = 23;
 var lastResponse = null;
 
 $(function() {
@@ -44,22 +45,22 @@ $(function() {
       url: API_ENDPOINT + '?postId=*',
       type: 'GET',
       success: function(response) {
-      	lastResponse = response;
-      	console.log('response', response);
+        lastResponse = response;
+        console.log('response', response);
         if (response.length > 0) {
           $('#notes').append(`
             <div class="card space-bottom">
-	            <div class="card-body">
-	              <h2 class="text-center">Voice Notes</h2>
-	              <div class="text-center">
-	                <button id="searchButton" class="btn btn-primary btn-sm">
-	                  Refresh List
-	                </button>
-	              </div>
-	              <br>
-	              <div id="posts"></div>
-	            </div>
-	          </div>
+              <div class="card-body">
+                <h2 class="text-center">Voice Notes</h2>
+                <div class="text-center">
+                  <button id="searchButton" class="btn btn-primary btn-sm">
+                    Refresh List
+                  </button>
+                </div>
+                <br>
+                <div id="posts"></div>
+              </div>
+            </div>
           `);
 
           document.getElementById('searchButton').onclick = function() {
@@ -77,17 +78,17 @@ $(function() {
             }
 
             $('#posts').append(`
-            	<div class="card space-bottom voice-note">
+              <div class="card space-bottom voice-note">
                 <div class="card-body">
                   <div class="container-fluid">
                     <div class="row text-center align-items-center">
                       <div id="note-${i}" class="col-lg-3">
                         <span class="small timestamp">
-                        	${data['timestamp']}
+                          ${data['timestamp']}
                         </span>
-                        <strong>${data['text'].length > 20 ? 
-                          `${data['text'].slice(0, 20)}...` : data['text']}
-                        </strong>
+                        <strong>${data['text'].length > DISPLAY_TEXT ? 
+                          `${data['text'].slice(0, DISPLAY_TEXT - 3)}...`
+                          : data['text']}</strong>
                       </div>
                       <div class="col-lg-6">
                         ${data['status'] === "PROCESSING" ?
@@ -105,14 +106,17 @@ $(function() {
             `);
 
             $(`#note-${i}`).click(function() {
-            	var $text = $(this).find('strong');
-            	if ($text.text().length - 3 < lastResponse[i].text.length) {
-            		// display full text
-            		$text.text(lastResponse[i].text);
-            	} else {
-            		// display truncated text
-            		$text.text(`${lastResponse[i].text.slice(0, 20)}...`);
-            	}
+              if (lastResponse[i].text.length <= DISPLAY_TEXT) return;
+
+              var $text = $(this).find('strong');
+              if ($text.text().length < lastResponse[i].text.length) {
+                // display full text
+                $text.text(lastResponse[i].text);
+              } else {
+                // display truncated text
+                $text.text(`${lastResponse[i].text.slice(0,
+                  DISPLAY_TEXT - 3)}...`);
+              }
             })
           });
 
@@ -153,27 +157,27 @@ $(function() {
   }
 
   function format(str) {
-  	var lineArr = str.split('\n');
-  	var periodEndArr = lineArr.map(function(el) {
-  		if (el.match(/[a-zA-Z]/)) {
+    var lineArr = str.split('\n');
+    var periodEndArr = lineArr.map(function(el) {
+      if (el.match(/[a-zA-Z]/)) {
         if (el.charAt(el.length - 1).match(/[\;\.\,\?\!]/)) {
             return el;
         } else {
             return el + '.';
         }
-	    } else {
-	        return '';
-	    }
-  	});
-  	var nonEmptyArr = periodEndArr.filter(function(el) {
-  		return el.length;
-  	});
-  	var joinedStr = nonEmptyArr.join(' ');
+      } else {
+          return '';
+      }
+    });
+    var nonEmptyArr = periodEndArr.filter(function(el) {
+      return el.length;
+    });
+    var joinedStr = nonEmptyArr.join(' ');
 
-  	// regex /g flag means match all occurrences, needed on replace() or else
-  	// only first occurrence is replaced
-  	var finalStr = joinedStr
-  		// .replace(/(?<=[^-\s])\n/g, '. ')
+    // regex /g flag means match all occurrences, needed on replace() or else
+    // only first occurrence is replaced
+    var finalStr = joinedStr
+      // .replace(/(?<=[^-\s])\n/g, '. ')
       // .replace(/\.{2,}/g, '. ')
       .replace(/[\-\—]{2,}/g, '')
       .replace(/[\<\>\"\'\“\”]/g, '')
@@ -182,13 +186,13 @@ $(function() {
   }
 
   function flash(message) {
-  	var el = document.getElementById('postIDreturned');
+    var el = document.getElementById('postIDreturned');
     el.className = message.toLowerCase();
     el.textContent = message;
 
-  	setTimeout(function() {
-  		el.textContent = '';
-  	}, 2000);
+    setTimeout(function() {
+      el.textContent = '';
+    }, 2000);
   }
 
 });
