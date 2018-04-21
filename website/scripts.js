@@ -11,6 +11,7 @@ $(function() {
     var formattedText = format($('#postText').val());
     var inputData = {
       'voice': 'Joanna',
+      'rawText': $('#postText').val(),
       'text' : formattedText,
       'speed': 'slow',    // x-slow, slow, medium, fast, x-fast
       'timestamp': (new Date()).toLocaleString(),
